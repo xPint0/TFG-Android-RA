@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "986474221491",
+    "firebase_url": "https://tfg-android-81383-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "tfg-android-81383",
     "storage_bucket": "tfg-android-81383.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:986474221491:android:2e28557d700df8c33cc5c6",
+        "mobilesdk_app_id": "1:986474221491:android:20deb818b6c7baf03cc5c6",
         "android_client_info": {
-          "package_name": "com.example.realidadaumentadatfg"
+          "package_name": "com.example.tfg_android_ra"
         }
       },
       "oauth_client": [],
