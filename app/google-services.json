@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "986474221491",
+    "project_id": "tfg-android-81383",
+    "storage_bucket": "tfg-android-81383.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986474221491:android:2e28557d700df8c33cc5c6",
+        "android_client_info": {
+          "package_name": "com.example.realidadaumentadatfg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdkmFGHVV_1dVN0Nz7aul51-I328lMXWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
