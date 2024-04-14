@@ -45,7 +45,6 @@ class FirstFragment : Fragment() {
 
         scanner.startScan().addOnSuccessListener { barcode ->
             val values = barcode.rawValue
-            binding.tvPrueba.text =  values
             Log.d("barcode", "OK! value: $values")
         }
             .addOnCanceledListener() {
