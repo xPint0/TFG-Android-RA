@@ -9,13 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.tfg_android_ra.databinding.FragmentFirstBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 
@@ -26,6 +30,10 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+
+    private var scanner: GmsBarcodeScanner? = null
+    private var audioManager: AudioManager? = null
+    private var navController: NavController? = null
 
 
     // This property is only valid between onCreateView and
@@ -48,29 +56,16 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val scanner = GmsBarcodeScanning.getClient(requireContext(), options)
-        val audioManager = requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        navController = findNavController()
+        scanner = GmsBarcodeScanning.getClient(requireContext(), options)
+        audioManager = requireActivity().getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         //llamo al metodo de girar al vinilo
-        //rotateImageView(binding.imageView)
+        binding.ivVinyl.startAnimation(AnimationUtils.loadAnimation(requireContext(), com.example.tfg_android_ra.R.anim.rotate_animation))
 
         binding.fabQrscan.setOnClickListener { view ->
-
-            //Escaner QR
-            scanner.startScan().addOnSuccessListener { barcode ->
-                val values = barcode.rawValue
-                Log.d("barcode", "OK! value: $values")
-            }
-                .addOnCanceledListener() {
-                    Log.d("barcode", "Canceled!")
-                }
-                .addOnFailureListener { e ->
-                    Log.d("barcode", "Failed read!")
-                }
-
+            startScan()
         }
-
-
 
         binding.cbVolumeSelector.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
@@ -89,26 +84,26 @@ class FirstFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    private fun startScan() {
+        //Escaner QR
+        scanner?.startScan()?.addOnSuccessListener { barcode ->
+            val values = barcode.rawValue
+            Log.d("barcode", "OK! value: $values")
 
-    fun rotateImageView(imageView: ImageView) {
-        // Definir la animación de rotación en el eje X
-        val rotateAnimation = RotateAnimation(0f, 0f)
+            val bundle = Bundle()
+            bundle.putString("QRvalue", values)
 
-        // Establecer la duración de la animación
-        rotateAnimation.duration = 1000 // Duración en milisegundos (1 segundo)
-
-        // Establecer la interpolación de la animación (opcional)
-        rotateAnimation.interpolator = LinearInterpolator()
-
-        // Establecer la repetición de la animación (opcional)
-        rotateAnimation.repeatCount = Animation.INFINITE // Repetir la animación infinitamente
-
-        // Establecer el tipo de transformación en 3D para la animación
-        rotateAnimation.fillAfter = true
-
-        // Iniciar la animación en la ImageView
-        imageView.startAnimation(rotateAnimation)
+            //TODO:arreglar el tema de navegacion al segundo fragment, da error al estar en SavedInstance = true
+            navController?.navigate(com.example.tfg_android_ra.R.id.action_FirstFragment_to_SecondFragment, bundle)
+        }
+            ?.addOnCanceledListener() {
+                Log.d("barcode", "Canceled!")
+            }
+            ?.addOnFailureListener { e ->
+                Log.d("barcode", "Failed read!")
+            }
     }
+
 
 
 

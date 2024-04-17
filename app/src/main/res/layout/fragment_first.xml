@@ -6,39 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FirstFragment">
+    tools:context=".FirstFragment"
+    android:background="@android:color/transparent">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/iv_fondo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/fondopantalla"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        tools:layout_editor_absoluteY="8dp" />-->
 
     <ImageView
-        android:id="@+id/iv_vinilo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_vinyl"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/vinyl2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/iv_fondo"
-        app:layout_constraintTop_toTopOf="@+id/iv_fondo"
-        app:layout_constraintVertical_bias="0.386"
-        tools:src="@mipmap/vinilo_foreground" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.408" />
 
     <CheckBox
         android:id="@+id/cb_volume_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="true"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_fondo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_vinilo"
-        app:layout_constraintVertical_bias="0.235" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_vinyl"
+        app:layout_constraintVertical_bias="0.082" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_qrscan"

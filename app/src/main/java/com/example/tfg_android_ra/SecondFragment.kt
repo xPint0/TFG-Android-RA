@@ -32,7 +32,8 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        val QRvalue = arguments?.getString("QRvalue")
+        binding.tvPrueba.text = QRvalue
     }
 
     override fun onDestroyView() {
