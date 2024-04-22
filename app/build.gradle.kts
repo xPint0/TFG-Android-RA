@@ -37,6 +37,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -46,6 +47,8 @@ dependencies {
     //escaner QR
     implementation ("com.google.android.gms:play-services-code-scanner:16.1.0")
 
+    implementation("com.google.ar:core:1.42.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -53,6 +56,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.vision.common)
+    //dependencia de Sceneform
+    implementation(libs.sceneform.ux)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

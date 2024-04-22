@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "TFG-Android-RA"
 include(":app")
- 
