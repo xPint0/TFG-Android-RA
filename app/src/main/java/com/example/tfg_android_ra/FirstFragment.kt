@@ -30,13 +30,12 @@ class FirstFragment : Fragment() {
 
     private var scanner: GmsBarcodeScanner? = null
     private var audioManager: MediaPlayer? = null
-    private var navController: NavController? = null
 
     private val VOL_ON = 0.5f
     private val VOL_OFF = 0f
 
-    private val song1 = com.example.tfg_android_ra.R.raw.paranoid
-    private val song2 = com.example.tfg_android_ra.R.raw.byob
+    private val song1 = R.raw.paranoid
+    private val song2 = R.raw.byob
 
 
     // This property is only valid between onCreateView and
@@ -59,8 +58,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = findNavController()
         scanner = GmsBarcodeScanning.getClient(requireContext(), options)
+        Log.d("savedInstanceState", savedInstanceState.toString())
 
         //llamo al metodo de girar al vinilo y comienzo la musica
         binding.ivVinyl.startAnimation(AnimationUtils.loadAnimation(requireContext(), com.example.tfg_android_ra.R.anim.rotate_animation))
@@ -75,10 +74,12 @@ class FirstFragment : Fragment() {
                 audioManager?.setVolume(VOL_ON, VOL_ON)
                 Snackbar.make(view, "Has restablezido el volumen", Snackbar.LENGTH_LONG).show()
                 Log.d("volumen", "on")
+                //buttonView.setButtonDrawable(R.drawable.sound_on)
             }else{
                 audioManager?.setVolume(VOL_OFF, VOL_OFF)
                 Snackbar.make(view, "Has muteado el volumen", Snackbar.LENGTH_LONG).show()
                 Log.d("volumen", "off")
+                //buttonView.setButtonDrawable(R.drawable.sound_off)
             }
         }
     }
@@ -106,7 +107,7 @@ class FirstFragment : Fragment() {
             }
 
             //TODO:arreglar el tema de navegacion al segundo fragment, da error al estar en SavedInstance = true
-            navController?.navigate(com.example.tfg_android_ra.R.id.action_FirstFragment_to_SecondFragment, bundle)
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
         }
             ?.addOnCanceledListener() {
                 Log.d("barcode", "Canceled!")
@@ -119,9 +120,13 @@ class FirstFragment : Fragment() {
 
 
     private fun startAudio(uri: Int) {
+
+        val estado = binding.cbVolumeSelector.isChecked
+
         audioManager?.release() // Liberar el recurso del MediaPlayer si ya estaba en uso
         audioManager = MediaPlayer.create(requireContext(), uri)
-        audioManager?.setVolume(VOL_ON, VOL_ON)
+        audioManager?.setVolume(if(estado) VOL_ON else VOL_OFF, if(estado) VOL_ON else VOL_OFF) //comprobacion del estado para que la siguiente cancion
+                                                                                                // siga con el mismo estado q la anterior
         audioManager?.setOnCompletionListener {
             if (uri == song1) {
                 startAudio(song2) // Si se completó la reproducción de la primera canción, iniciar la segunda

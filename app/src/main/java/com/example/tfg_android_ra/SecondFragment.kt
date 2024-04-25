@@ -17,6 +17,7 @@ import com.google.ar.sceneform.ux.ArFragment
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
+    private val Slipknotmask = R.raw.slipknotmask
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -44,6 +45,7 @@ class SecondFragment : Fragment() {
         // Cargar el modelo 3D
         ModelRenderable.builder()
             .setSource(requireContext(), Uri.parse(R.raw.slipknotmask.toString()))
+            //.setSource(requireContext(), Slipknotmask)
             .build()
             .thenAccept { renderable ->
                 // Crear un nodo de anclaje para el modelo y agregarlo al escenario
