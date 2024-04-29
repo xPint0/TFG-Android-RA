@@ -1,6 +1,5 @@
 package com.example.tfg_android_ra
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,13 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 
+
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
-    private val Slipknotmask = R.raw.slipknotmask
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,15 +36,14 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val QRvalue = arguments?.getString("QRvalue")
-        binding.tvPrueba.text = QRvalue
+        val qrValue = ""
+        binding.tvPrueba.text = qrValue
 
-        val arFragment = childFragmentManager.findFragmentById(R.id.ux_element) as ArFragment
+        //val arFragment = childFragmentManager.findFragmentById(R.id.ux_element) as ArFragment
 
         // Cargar el modelo 3D
-        ModelRenderable.builder()
-            .setSource(requireContext(), Uri.parse(R.raw.slipknotmask.toString()))
-            //.setSource(requireContext(), Slipknotmask)
+        /*ModelRenderable.builder()
+            .setSource(requireContext(), R.raw.bee)
             .build()
             .thenAccept { renderable ->
                 // Crear un nodo de anclaje para el modelo y agregarlo al escenario
@@ -57,7 +55,7 @@ class SecondFragment : Fragment() {
                 // Manejar cualquier error al cargar el modelo
                 throwable.printStackTrace()
                 null
-            }
+            }*/
 
     }
 
