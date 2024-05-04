@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.play.services.vision.common)
     //dependencia de Sceneform
     implementation(libs.sceneform.ux)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

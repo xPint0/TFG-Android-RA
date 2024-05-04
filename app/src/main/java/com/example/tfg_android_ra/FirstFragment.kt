@@ -3,6 +3,8 @@ package com.example.tfg_android_ra
 import android.app.AlertDialog
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,6 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
-import kotlinx.coroutines.processNextEventInCurrentThread
 
 
 /**
@@ -100,7 +101,13 @@ class FirstFragment : Fragment() {
                 }
                 // Navegar al segundo fragmento con el bundle
                 //TODO arreglar la navegacion
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+                // Retrasar la navegación para evitar problemas con el estado del FragmentManager
+                Handler(Looper.getMainLooper()).postDelayed({
+                    view?.let { _ ->
+                        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+                    }
+                }, 100)
+                //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
             } else {
                 Log.d("barcode", "QR no valido de la app (No contiene el texto requerido)")
                 showErrorDialog()
