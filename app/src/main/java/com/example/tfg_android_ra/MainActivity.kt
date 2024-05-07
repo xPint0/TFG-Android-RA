@@ -52,4 +52,10 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+        if (fragment is SecondFragment) fragment.borrarArchivosLocales()
+    }
+
 }

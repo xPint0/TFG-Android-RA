@@ -59,6 +59,7 @@ dependencies {
     //dependencia de Sceneform
     implementation(libs.sceneform.ux)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
