@@ -112,8 +112,8 @@
             android:layout_height="40dp"
             android:backgroundTint="@color/purple_light"
             android:checked="false"
-            android:textOff="@string/pause"
-            android:textOn="@string/play" />
+            android:textOff="@string/play"
+            android:textOn="@string/pause" />
 
         <SeekBar
             android:id="@+id/seek_recorrido"
@@ -124,7 +124,7 @@
 
         <TextView
             android:id="@+id/tv_tiempo"
-            android:layout_width="30dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:textColor="@color/purple_light" />
 

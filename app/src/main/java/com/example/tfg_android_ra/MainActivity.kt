@@ -8,6 +8,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import com.example.tfg_android_ra.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +57,35 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
-        if (fragment is SecondFragment) fragment.borrarArchivosLocales()
+        if (fragment is SecondFragment){
+            fragment.borrarArchivosLocales()
+            fragment.audioManager2?.release()
+        }
+        if (fragment is FirstFragment){
+            fragment.audioManager?.release()
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.clearAnimation()
+        }
+
+    }
+
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+        if (fragment is FirstFragment){
+            fragment.audioManager?.pause()
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.clearAnimation()
+        }
+        if (fragment is SecondFragment) fragment.audioManager2?.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+        if (fragment is FirstFragment){
+            fragment.audioManager?.start()
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.startAnimation(AnimationUtils.loadAnimation(fragment.context, R.anim.rotate_animation))
+        }
+        if (fragment is SecondFragment) fragment.audioManager2?.start()
     }
 
 }

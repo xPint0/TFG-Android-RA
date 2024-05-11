@@ -27,8 +27,8 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
-    private var scanner: GmsBarcodeScanner? = null
-    private var audioManager: MediaPlayer? = null
+    public var scanner: GmsBarcodeScanner? = null
+    public var audioManager: MediaPlayer? = null
 
     private val VOL_ON = 0.5f
     private val VOL_OFF = 0f
@@ -147,6 +147,7 @@ class FirstFragment : Fragment() {
             .setPositiveButton("Aceptar", null)
             .show()
     }
+
 
 
 }

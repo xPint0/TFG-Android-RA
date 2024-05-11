@@ -5,6 +5,7 @@ import android.app.AlertDialog.Builder
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
@@ -32,6 +34,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
+import java.util.Locale
 import kotlin.Exception
 
 
@@ -57,6 +60,10 @@ class SecondFragment : Fragment() {
     private lateinit var localFile : File
     private lateinit var localFile2 : File
 
+    public var audioManager2: MediaPlayer? = null
+    private var tiempoTotalCancion : Int = 0
+    private val handler = Handler(Looper.getMainLooper())
+
     private var progressDialog: ProgressDialog? = null
 
     override fun onCreateView(
@@ -73,7 +80,6 @@ class SecondFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -167,6 +173,43 @@ class SecondFragment : Fragment() {
             }
         }
 
+        binding.tvTiempo.text = timeFormat(tiempoTotalCancion)
+
+        binding.tbPlayPause.setOnCheckedChangeListener{ _, isChecked ->
+            if(isChecked){
+                audioManager2?.start()
+                actualizarSeekBar()
+            }else{
+                audioManager2?.pause()
+            }
+        }
+
+        //TODO repasar que funciona bien el la reproduccion del mp3 y despues probar a cambiar la posicion de la cancion con la seekbar
+        binding.seekRecorrido.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    // Si el cambio de progreso fue iniciado por el usuario, actualizar la posición de reproducción
+                    audioManager2?.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // No se necesita implementar para este caso
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // No se necesita implementar para este caso
+            }
+        })
+
+        audioManager2?.setOnCompletionListener {
+            // Reiniciar la posición de la reproducción del audio
+            audioManager2?.seekTo(0)
+            binding.tbPlayPause.isChecked = false // Desmarcar el toggle button
+            binding.seekRecorrido.progress = 0 // Reiniciar la posición de la seek bar
+            binding.tvTiempo.text = timeFormat(0) // Reiniciar el texto del tiempo transcurrido
+        }
+
 
 
         //val arFragment = childFragmentManager.findFragmentById(R.id.ux_element) as ArFragment
@@ -189,12 +232,32 @@ class SecondFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
+    private fun actualizarSeekBar() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                val mp3player = audioManager2
+                if (mp3player != null && audioManager2?.isPlaying == true) {
+                    val currentPosition = audioManager2!!.currentPosition
+                    binding.seekRecorrido.progress = currentPosition
+                    binding.tvTiempo.text = timeFormat(currentPosition)
+                }
+                handler.postDelayed(this, 0)
+            }
+        }, 0)
+    }
+
+    private fun timeFormat(tiempoEnMilisegundos: Int): String? {
+        val segundos = tiempoEnMilisegundos / 1000
+        val minutos = segundos / 60
+        val segundosRestantes = segundos % 60
+        return String.format(Locale.getDefault(), "%02d:%02d", minutos, segundosRestantes)
+    }
+
     private fun cargarArchivosStorage(nAlbum: String){
         progressDialog = ProgressDialog(requireContext())
         progressDialog?.setMessage("Cargando archivos...")
         progressDialog?.setCancelable(false)
-        progressDialog?.window?.setBackgroundBlurRadius(Int.MAX_VALUE)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)progressDialog?.window?.setBackgroundBlurRadius(Int.MAX_VALUE)
         progressDialog?.show()
 
         val referenceAlbum = storage.child("${nAlbum}-Album.jpg")
@@ -215,7 +278,13 @@ class SecondFragment : Fragment() {
 
         referencePreview.getFile(localFile2).addOnSuccessListener {
             Log.d("AlbumPreview", "Descarga OK")
-            checkAndDismissProgressDialog()
+            audioManager2 = MediaPlayer.create(requireContext(), Uri.fromFile(localFile2))
+            audioManager2?.setOnPreparedListener{
+                tiempoTotalCancion = it.duration
+                binding.seekRecorrido.max = tiempoTotalCancion
+                binding.tvTiempo.text = timeFormat(0)
+                checkAndDismissProgressDialog()
+            }
         }.addOnFailureListener{
             Log.e("AlbumPreviewError", "Descarga ERROR")
             checkAndDismissProgressDialog()
@@ -252,8 +321,11 @@ class SecondFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
+        audioManager2?.release()
         borrarArchivosLocales()
         _binding = null
     }
+
 
 }
