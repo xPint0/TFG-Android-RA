@@ -62,9 +62,10 @@ class FirstFragment : Fragment() {
 
         //llamo al metodo de girar al vinilo y comienzo la musica
         binding.ivVinyl.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation))
+        binding.ivVinyl2.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_animation))
         startAudio(song1)
 
-        binding.fabQrscan.setOnClickListener { view ->
+        binding.fabQrscan.setOnClickListener {
             startScan()
         }
 
@@ -80,6 +81,12 @@ class FirstFragment : Fragment() {
                 Log.d("volumen", "off")
 
             }
+        }
+
+        binding.ibInfo.setOnClickListener {
+            val dialogFragment = DialogFragment1()
+            dialogFragment.configurarTexto(getString(R.string.info_app))
+            dialogFragment.show(childFragmentManager, "Informacion App")
         }
     }
 

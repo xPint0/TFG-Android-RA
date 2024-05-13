@@ -1,7 +1,6 @@
 package com.example.tfg_android_ra
 
 import android.app.AlertDialog
-import android.app.AlertDialog.Builder
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -12,20 +11,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.GridLayout
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_android_ra.databinding.FragmentSecondBinding
-import com.google.ar.sceneform.AnchorNode
-import com.google.ar.sceneform.rendering.ModelRenderable
-import com.google.ar.sceneform.ux.ArFragment
-import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -35,7 +32,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.util.Locale
-import kotlin.Exception
 
 
 /**
@@ -84,7 +80,6 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val qrValue = arguments?.getString("QRvalue")
-        binding.tvPrueba.text = qrValue
 
         if (!qrValue.isNullOrEmpty()){
             val ruta = qrValue.substringBefore("/")
@@ -115,26 +110,26 @@ class SecondFragment : Fragment() {
             Log.d("ERROR CADENA", "no se ha recibido ninguna cadena")
         }
 
-        binding.fabAlbum.setOnClickListener {
+        binding.btInformacion.setOnClickListener {
             val dialogFragment = DialogFragment1()
             dialogFragment.configurarTexto(album)
             dialogFragment.show(childFragmentManager, "Album")
         }
 
-        binding.fabHistoria.setOnClickListener {
+        binding.btHistoria.setOnClickListener {
             val dialogFragment = DialogFragment1()
             dialogFragment.configurarTexto(historia)
             dialogFragment.show(childFragmentManager, "Historia")
         }
 
-        binding.fabIntegrantes.setOnClickListener {
+        binding.btIntegrantes.setOnClickListener {
             val dialogFragment = DialogFragment2()
             dialogFragment.configurarIntegrantes(integrantes)
             dialogFragment.show(childFragmentManager, "Integrantes")
             //TODO mejorar el estilo del dialogfragment
         }
 
-        binding.fabOtro.setOnClickListener {
+        binding.btCuriosidades.setOnClickListener {
             val dialogFragment = DialogFragment1()
             dialogFragment.configurarTexto(otro)
             dialogFragment.show(childFragmentManager, "Otro")
@@ -211,6 +206,10 @@ class SecondFragment : Fragment() {
         }
 
 
+        binding.btPrincipal.setOnClickListener{
+            if(binding.menuBotones.visibility == View.GONE) openMenu() else closeMenu()
+        }
+
 
         //val arFragment = childFragmentManager.findFragmentById(R.id.ux_element) as ArFragment
 
@@ -231,6 +230,23 @@ class SecondFragment : Fragment() {
             }*/
 
     }
+
+    private fun openMenu() {
+        val params = binding.btPrincipal.layoutParams as GridLayout.LayoutParams
+        params.setGravity(Gravity.START)
+        binding.btPrincipal.layoutParams = params
+        binding.btPrincipal.setImageResource(R.drawable.uparrow)
+        binding.menuBotones.visibility = View.VISIBLE
+    }
+
+    private fun closeMenu() {
+        val params = binding.btPrincipal.layoutParams as GridLayout.LayoutParams
+        params.setGravity(Gravity.CENTER)
+        binding.btPrincipal.layoutParams = params
+        binding.btPrincipal.setImageResource(R.drawable.downarrow)
+        binding.menuBotones.visibility = View.GONE
+    }
+
 
     private fun actualizarSeekBar() {
         handler.postDelayed(object : Runnable {
@@ -305,7 +321,10 @@ class SecondFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("ERROR")
             .setMessage("Se ha detectado un problema al escanear el leer los datos de Firebase, por favor salga y vuela a intenterlo mas tarde")
-            .setPositiveButton("Aceptar", null)
+            .setPositiveButton("Aceptar"){dialog, _ ->
+                dialog.dismiss()
+                findNavController().navigateUp()
+            }
             .show()
     }
 
@@ -314,7 +333,7 @@ class SecondFragment : Fragment() {
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({
                 progressDialog?.dismiss()
-            }, 500)
+            }, 620)
         }
     }
 

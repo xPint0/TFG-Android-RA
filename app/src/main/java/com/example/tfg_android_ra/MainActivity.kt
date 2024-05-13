@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
         if (fragment is FirstFragment){
             fragment.audioManager?.release()
-            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.clearAnimation()
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl2)?.clearAnimation()
         }
 
     }
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
         if (fragment is FirstFragment){
             fragment.audioManager?.pause()
-            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.clearAnimation()
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl2)?.clearAnimation()
         }
         if (fragment is SecondFragment) fragment.audioManager2?.pause()
     }
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
         if (fragment is FirstFragment){
             fragment.audioManager?.start()
-            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl)?.startAnimation(AnimationUtils.loadAnimation(fragment.context, R.anim.rotate_animation))
+            fragment.view?.findViewById<ImageView>(R.id.iv_vinyl2)?.startAnimation(AnimationUtils.loadAnimation(fragment.context, R.anim.rotate_animation))
         }
         if (fragment is SecondFragment) fragment.audioManager2?.start()
     }

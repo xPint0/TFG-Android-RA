@@ -1,6 +1,11 @@
 package com.example.tfg_android_ra
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.StyleSpan
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -30,9 +35,17 @@ class DialogFragment2 : DialogFragment() {
                     layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     setPadding(8,10, 8, 10)
                     setTextColor(ContextCompat.getColor(context, R.color.purple_dark))
-                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f)
                     gravity = Gravity.CENTER
-                    setText("$rol: $nombre")
+
+                    val spannableRol = SpannableString("$rol: ")
+                    spannableRol.setSpan(StyleSpan(Typeface.BOLD), 0, spannableRol.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    val spannableNombre = SpannableString(nombre)
+                    spannableNombre.setSpan(StyleSpan(Typeface.NORMAL), 0, spannableNombre.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    text = TextUtils.concat(spannableRol, spannableNombre)
+                    setTypeface(resources.getFont(R.font.underwood_champion))
                 }
 
                 linearLayout.addView(textView)

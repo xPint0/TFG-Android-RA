@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".FirstFragment"
-    android:background="@android:color/transparent">
+    android:background="@drawable/casette">
 
     <!--<ImageView
         android:id="@+id/iv_fondo"
@@ -19,15 +19,27 @@
 
     <ImageView
         android:id="@+id/iv_vinyl"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="305sp"
+        android:layout_height="362sp"
         android:src="@drawable/vinyl2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.678"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.400" />
+        app:layout_constraintVertical_bias="0.112" />
+
+    <ImageView
+        android:id="@+id/iv_vinyl2"
+        android:layout_width="268sp"
+        android:layout_height="308sp"
+        android:src="@drawable/vinyl2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.632"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -39,15 +51,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_vinyl"
+        app:layout_constraintTop_toBottomOf="@+id/iv_vinyl2"
         app:layout_constraintVertical_bias="0.125">
-
-        <CheckBox
-            android:id="@+id/cb_volume_selector"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:button="@drawable/cb_custom_selector"
-            android:checked="true" />
 
     </androidx.cardview.widget.CardView>
 
@@ -65,5 +70,35 @@
         app:maxImageSize="35dp"
         app:srcCompat="@drawable/qr_code_logo"
         android:backgroundTint="@color/purple_light"/>
+
+    <ImageButton
+        android:id="@+id/ib_info"
+        android:layout_width="69sp"
+        android:layout_height="69sp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#121212"
+        android:src="@android:drawable/ic_dialog_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067"
+        app:tint="@color/purple_dark" />
+
+    <CheckBox
+        android:id="@+id/cb_volume_selector"
+        android:layout_width="69dp"
+        android:layout_height="69dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#121212"
+        android:button="@drawable/cb_custom_selector"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fab_qrscan"
+        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9288" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
