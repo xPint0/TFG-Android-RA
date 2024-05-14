@@ -23,54 +23,6 @@
         android:layout_gravity="center"
         android:src="@drawable/vinyl2"/>
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_integrantes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:clickable="true"
-        android:src="@drawable/integrantes"
-        android:visibility="gone" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_otro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="264dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_help"
-        android:visibility="gone" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_album"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:clickable="true"
-        android:src="@drawable/album"
-        android:visibility="gone" />
-
-    <fragment
-        android:id="@+id/ux_element"
-        android:name="com.google.ar.sceneform.ux.ArFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_prueba"
-        app:layout_constraintVertical_bias="0.416" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_historia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="264dp"
-        android:clickable="true"
-        android:src="@drawable/historia"
-        android:visibility="gone" />-->
-
     <LinearLayout
         android:id="@+id/reproductorMp3"
         android:layout_width="wrap_content"
@@ -109,14 +61,15 @@
             android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10sp"
-            android:textColor="@color/purple_light" />
+            android:textColor="@color/purple_light"
+            android:fontFamily="@font/underwood_champion"/>
 
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_principal"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_rowSpan="2"
         android:layout_rowWeight="1"
@@ -125,9 +78,15 @@
         android:layout_columnWeight="1"
         android:layout_gravity="center"
         android:paddingHorizontal="5dp"
-        android:background="@drawable/rounded_corners"
-        android:src="@drawable/downarrow"
-        app:tint="@color/purple_light" />
+        app:icon="@drawable/downarrow"
+        app:iconTint="@color/purple_light"
+        android:backgroundTint="@color/purple_dark"
+        android:text="Desplegar menu"
+        android:textAllCaps="false"
+        android:textColor="@color/purple_light"
+        android:fontFamily="@font/moms"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp" />
 
     <LinearLayout
         android:id="@+id/menuBotones"
@@ -153,7 +112,10 @@
             android:text="@string/historia"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="145dp"
-            android:fontFamily="@font/underwood_champion"/>
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
 
         <Button
             android:id="@+id/bt_curiosidades"
@@ -164,7 +126,10 @@
             android:text="@string/curiosidades"
             tools:layout_editor_absoluteX="267dp"
             tools:layout_editor_absoluteY="145dp"
-            android:fontFamily="@font/underwood_champion"/>
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
 
         <Button
             android:id="@+id/bt_informacion"
@@ -175,7 +140,10 @@
             android:text="@string/informacion"
             tools:layout_editor_absoluteX="38dp"
             tools:layout_editor_absoluteY="408dp"
-            android:fontFamily="@font/underwood_champion"/>
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
 
         <Button
             android:id="@+id/bt_integrantes"
@@ -186,7 +154,10 @@
             android:text="@string/integrantes"
             tools:layout_editor_absoluteX="247dp"
             tools:layout_editor_absoluteY="408dp"
-            android:fontFamily="@font/underwood_champion"/>
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
 
     </LinearLayout>
 

@@ -8,25 +8,23 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 
 class DialogFragment1 : DialogFragment() {
-    // Declarar una variable para almacenar la información que se mostrará en el diálogo
+    // variable para almacenar la información que va a mostrar
     private var texto: String? = null
 
-    // Método para configurar la información que se mostrará en el diálogo
+    // Metodo para configurar la informacion que se va a mostrar en el dialogo
     fun configurarTexto(texto: String) {
         this.texto = texto
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflar el diseño del diálogo
         val view = inflater.inflate(R.layout.dialog_fragment_1, container, false)
 
-        // Buscar el TextView en el diseño del diálogo
+        // Textview que va a contener el texto
         val textView = view.findViewById<TextView>(R.id.tv_uno)
 
-        // Establecer el texto del TextView con la información recibida
+        // Establecer el texto con la informacion recibida
         textView.text = texto
 
-        // Devolver la vista del diálogo
         return view
     }
 }

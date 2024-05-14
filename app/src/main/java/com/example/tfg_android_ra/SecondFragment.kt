@@ -11,15 +11,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.GridLayout
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_android_ra.databinding.FragmentSecondBinding
@@ -82,9 +78,9 @@ class SecondFragment : Fragment() {
         val qrValue = arguments?.getString("QRvalue")
 
         if (!qrValue.isNullOrEmpty()){
-            val ruta = qrValue.substringBefore("/")
+            val ruta = qrValue.substringBefore("/") //Separo el texto recibido del QR por la / ya que manda la ruta de la BD y tras la barra el Id del album
             val numero = qrValue.substringAfterLast("/")
-            Log.d("valor ruta", ruta)
+            Log.d("Valor ruta", ruta)
 
             cargarArchivosStorage(numero)
             database.child(ruta).addValueEventListener(object : ValueEventListener{
@@ -107,7 +103,7 @@ class SecondFragment : Fragment() {
             })
 
         }else{
-            Log.d("ERROR CADENA", "no se ha recibido ninguna cadena")
+            Log.d("ERROR CADENA", "No se ha recibido ninguna cadena")
         }
 
         binding.btInformacion.setOnClickListener {
@@ -124,7 +120,7 @@ class SecondFragment : Fragment() {
 
         binding.btIntegrantes.setOnClickListener {
             val dialogFragment = DialogFragment2()
-            dialogFragment.configurarIntegrantes(integrantes)
+            dialogFragment.configurarIntegrantes(integrantes, localFile)
             dialogFragment.show(childFragmentManager, "Integrantes")
             //TODO mejorar el estilo del dialogfragment
         }
@@ -179,11 +175,10 @@ class SecondFragment : Fragment() {
             }
         }
 
-        //TODO repasar que funciona bien el la reproduccion del mp3 y despues probar a cambiar la posicion de la cancion con la seekbar
         binding.seekRecorrido.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    // Si el cambio de progreso fue iniciado por el usuario, actualizar la posición de reproducción
+                    // Actualizar la posición de reproducción por la accion del usuario (mover la barra)
                     audioManager2?.seekTo(progress)
                 }
             }
@@ -232,18 +227,14 @@ class SecondFragment : Fragment() {
     }
 
     private fun openMenu() {
-        val params = binding.btPrincipal.layoutParams as GridLayout.LayoutParams
-        params.setGravity(Gravity.START)
-        binding.btPrincipal.layoutParams = params
-        binding.btPrincipal.setImageResource(R.drawable.uparrow)
+        binding.btPrincipal.text = "Cerrar menu"
+        binding.btPrincipal.setIconResource(R.drawable.uparrow)
         binding.menuBotones.visibility = View.VISIBLE
     }
 
     private fun closeMenu() {
-        val params = binding.btPrincipal.layoutParams as GridLayout.LayoutParams
-        params.setGravity(Gravity.CENTER)
-        binding.btPrincipal.layoutParams = params
-        binding.btPrincipal.setImageResource(R.drawable.downarrow)
+        binding.btPrincipal.text = "Desplegar menu"
+        binding.btPrincipal.setIconResource(R.drawable.downarrow)
         binding.menuBotones.visibility = View.GONE
     }
 

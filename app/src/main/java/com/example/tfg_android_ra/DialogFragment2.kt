@@ -1,54 +1,48 @@
 package com.example.tfg_android_ra
 
-import android.graphics.Typeface
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.style.StyleSpan
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.DialogFragment
+import java.io.File
 
 class DialogFragment2 : DialogFragment() {
     private var integrantes: Map<String, String>? = null
+    private lateinit var imagen: File
 
-    fun configurarIntegrantes(integrantes: Map<String, String>) {
+    fun configurarIntegrantes(integrantes: Map<String, String>, localFile: File) {
         this.integrantes = integrantes
+        this.imagen = localFile
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_fragment_2, container, false)
-        val linearLayout = view.findViewById<LinearLayout>(R.id.layoutPrincipal)
+        val linearLayout = view.findViewById<LinearLayout>(R.id.ly_scroll)
 
         // Verificar que los integrantes no sean nulos y que el LinearLayout exista
         if (integrantes != null && linearLayout != null) {
             // Recorrer el mapa de integrantes y crear un TextView para cada integrante
             integrantes?.forEach { (rol, nombre) ->
-                val textView = TextView(context).apply {
+                val cardView = CardView(requireContext()).apply {
                     layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    setPadding(8,10, 8, 10)
-                    setTextColor(ContextCompat.getColor(context, R.color.purple_dark))
-                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f)
-                    gravity = Gravity.CENTER
+                    val card = inflater.inflate(R.layout.cardi_integrantes, this, false)
+                    val ivFoto = card.findViewById<ImageView>(R.id.iv_foto)
+                    val tvNombre = card.findViewById<TextView>(R.id.tv_nombre)
+                    val tvRol = card.findViewById<TextView>(R.id.tv_rol)
 
-                    val spannableRol = SpannableString("$rol: ")
-                    spannableRol.setSpan(StyleSpan(Typeface.BOLD), 0, spannableRol.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    val bitmap = BitmapFactory.decodeFile(imagen.absolutePath) //transformar la imagen a bitmap y asignarla al imageview
+                    ivFoto.setImageBitmap(bitmap)
+                    tvNombre.text = nombre
+                    tvRol.text = rol
 
-                    val spannableNombre = SpannableString(nombre)
-                    spannableNombre.setSpan(StyleSpan(Typeface.NORMAL), 0, spannableNombre.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-                    text = TextUtils.concat(spannableRol, spannableNombre)
-                    setTypeface(resources.getFont(R.font.underwood_champion))
+                    linearLayout.addView(card) //Anadir el cardview al layout
                 }
-
-                linearLayout.addView(textView)
             }
         }
 
