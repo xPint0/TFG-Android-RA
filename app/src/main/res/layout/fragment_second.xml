@@ -104,34 +104,6 @@
         android:layout_gravity="center">
 
         <Button
-            android:id="@+id/bt_historia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5sp"
-            android:gravity="center"
-            android:text="@string/historia"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="145dp"
-            android:fontFamily="@font/moms"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:backgroundTint="@color/purple_dark"
-            android:textColor="@color/purple_light"/>
-
-        <Button
-            android:id="@+id/bt_curiosidades"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5sp"
-            android:gravity="center"
-            android:text="@string/curiosidades"
-            tools:layout_editor_absoluteX="267dp"
-            tools:layout_editor_absoluteY="145dp"
-            android:fontFamily="@font/moms"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:backgroundTint="@color/purple_dark"
-            android:textColor="@color/purple_light"/>
-
-        <Button
             android:id="@+id/bt_informacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,6 +126,34 @@
             android:text="@string/integrantes"
             tools:layout_editor_absoluteX="247dp"
             tools:layout_editor_absoluteY="408dp"
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
+
+        <Button
+            android:id="@+id/bt_historia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5sp"
+            android:gravity="center"
+            android:text="@string/historia"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="145dp"
+            android:fontFamily="@font/moms"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/purple_dark"
+            android:textColor="@color/purple_light"/>
+
+        <Button
+            android:id="@+id/bt_curiosidades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5sp"
+            android:gravity="center"
+            android:text="@string/curiosidades"
+            tools:layout_editor_absoluteX="267dp"
+            tools:layout_editor_absoluteY="145dp"
             android:fontFamily="@font/moms"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:backgroundTint="@color/purple_dark"

@@ -1,6 +1,7 @@
 package com.example.tfg_android_ra
 
 import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_android_ra.databinding.FragmentFirstBinding
@@ -35,6 +38,8 @@ class FirstFragment : Fragment() {
 
     private val song1 = R.raw.paranoid
     private val song2 = R.raw.byob
+
+    private val CAMERA_PERMISSION_REQUEST_CODE = 100
 
 
     // This property is only valid between onCreateView and
@@ -66,7 +71,13 @@ class FirstFragment : Fragment() {
         startAudio(song1)
 
         binding.fabQrscan.setOnClickListener {
-            startScan()
+            //solicitar permisos de camara
+            if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                startScan()
+            }else{
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+            }
+
         }
 
         binding.cbVolumeSelector.setOnCheckedChangeListener { _, isChecked ->
@@ -89,6 +100,7 @@ class FirstFragment : Fragment() {
             dialogFragment.show(childFragmentManager, "Informacion App")
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -155,6 +167,22 @@ class FirstFragment : Fragment() {
             .show()
     }
 
+    override fun onPause() {
+        super.onPause()
+        audioManager?.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        audioManager?.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        audioManager?.release()
+        binding.ivVinyl.clearAnimation()
+        binding.ivVinyl2.clearAnimation()
+    }
 
 
 }

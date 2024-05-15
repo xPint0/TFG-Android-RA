@@ -328,9 +328,24 @@ class SecondFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        if(audioManager2?.isPlaying == true){
+            audioManager2?.pause()
+            binding.tbPlayPause.isChecked = false
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
+        audioManager2?.release()
+        borrarArchivosLocales()
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         handler.removeCallbacksAndMessages(null)
         audioManager2?.release()
         borrarArchivosLocales()
